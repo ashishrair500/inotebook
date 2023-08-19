@@ -1,0 +1,8 @@
+npm i bcryptjs :-
+this is used for password hashing.
+
+npm i jsonwebtoken :-   https://www.npmjs.com/package/jsonwebtoken
+https://jwt.io/
+
+JWT stands for "JSON Web Token." It is a compact and self-contained way to transmit information between parties as a JSON object. JWTs are often used for authentication and authorization purposes in web applications. They are commonly used in Node.js and other programming environments to manage user sessions and ensure secure communication between a client (such as a web browser or a mobile app) and a server.
+
