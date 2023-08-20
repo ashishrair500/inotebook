@@ -42,12 +42,12 @@ router.post('/createuser', [
 
             user = await User.create({              //this funtion is to take json object from request body bad me yahi input area se lenge 
                 name: req.body.name,             //The await keyword is used because creating a new user in the database might take some time, and 
-                                                 //  we want to wait for it to finish before moving on.
+                //  we want to wait for it to finish before moving on.
                 email: req.body.email,          // User.create({...}): This line is using the Mongoose create method to insert a new user document into the "user" collection. The method takes an object as an argument, where each key corresponds to a field in your schema, and each value corresponds to the data you want to store in those fields.
                 password: secPass,
             })
 
-console.log(user.id);
+            console.log(user.id);
             const data = {
                 user: {
                     id: user.id     //ye uhi collection bala user hai  uhi se id utha rahe hai  //yaha pr id ka use karenge token banane ke liye or sath me  JWT_secret bhej denge;

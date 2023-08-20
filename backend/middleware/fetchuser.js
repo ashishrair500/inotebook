@@ -25,15 +25,16 @@ there are two types of ids
     token ko verify karega with the help of JWT_SECRET. 
     And return a object which contains user ID.
     
-    now if we want to fetch ,add ,alter,delete through Notes.js Schema we will use this middleware.
+    now if we want to fetch ,add ,alter,delete through Notes.js Schema we will use this middleware. 
 
 */
     console.log(data);
-    req.user=data.user; // ab jo object return hua tha jwt se uske user ko (by data.user)  re.user ko assing kr denge  
-    //  The line req.user = data.user; simply assigns the value of the user property from the data object to the req.user property. It seems like this is part of a middleware or route handler in an Express.js application where the goal is to make the authenticated user's information available for further processing.
+    req.user=data.user;    // ab jo object return hua tha jwt se uske user ko (by data.user)  re.user ko assing kr denge  
+    //  The line req.user = data.user; simply assigns the value of the user property from the data object to the req.user property. It seems like this is part of a middleware or route handler in an Express.js application where the goal is to make the authenticated user's information available for further processing.   
+    //the first middleware assigns the user data to req.user, and then the /profile route handler can access that user data from req.user to send a JSON response containing the user information.
     next();
 }catch(error){
-    res.satus(401).send({error:"Please authenticate using a valid token"})
+    res.status(401).send({error:"Please authenticate using a valid token"})
 }
 
 }
