@@ -1,13 +1,14 @@
 const connectToMongo = require('./db');    //like importing   mogooses modules
 
-const express = require('express')    //express modules 
+const express = require('express');  //express modules 
+var cors = require('cors'); 
 
 connectToMongo();                 //function to connect ith mongodb 
 
 const app = express();             //taking referece of express
 
 const port = 5000
-
+app.use(cors())
 app.use(express.json())  //middleware-used in an Express.js application to enable middleware that parses incoming request bodies with JSON payloads.
  
 app.get('/', (req, res) => {
@@ -19,4 +20,4 @@ app.use('/api/notes', require('./routes/notes'))
 
 app.listen(port, () => {
     console.log(`iNotebook backend listening at http://localhost:${port}`)
-})  
+})   
