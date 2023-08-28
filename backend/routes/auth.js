@@ -19,7 +19,7 @@ router.post('/createuser', [
 
     //Promises: Inside an async function, you can use await with a promise. Promises are a way to handle asynchronous operations in JavaScript. The await keyword waits for the promise to be resolved, and then the function continues executing. If the promise is rejected, you can handle the error using a try...catch block.
     async (req, res) => {
-
+   let success=false;
         //if there are errors , return Bad request and the errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -32,7 +32,7 @@ router.post('/createuser', [
 
 
             if (user) {
-                return res.status(400).json({ error: "Sorry a user with this email already exits" })
+                return res.status(400).json({error: "Sorry a user with this email already exits" })
             }
 
 
@@ -58,7 +58,8 @@ router.post('/createuser', [
             console.log(authtoken);
             // res.json(user);   
             //database to data gya or user ko mil jayegi ek token jo ki webbrower me ho jaygi store
-            res.json(authtoken);                //res.json(user) is a method used to send a JSON response to a client (usually a web browser or another application making an HTTP request). 
+            success=true;
+            res.json({success,authtoken});                //res.json(user) is a method used to send a JSON response to a client (usually a web browser or another application making an HTTP request). 
 
 
         } catch (error) {
@@ -78,6 +79,7 @@ router.post('/login', [
     body('email', 'Enter a valid email').isEmail(),
     body('password', 'Password cannot be blank').exists(),
 ], async (req, res) => {
+    let success=false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -87,11 +89,13 @@ router.post('/login', [
     try {
         let user = await User.findOne({ email });
         if (!user) {
+            success=false;
             return res.status(404).json({ error: "Please try to login with correct credentials" });
         }
 
         const passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
+            success=false;
             return res.status(404).json({ error: "Please try to login with correct credentials" });
         }
         const data = {
@@ -102,9 +106,10 @@ router.post('/login', [
 
         const authtoken = jwt.sign(data, JWT_SECRET);
         console.log(authtoken);
+        success=true;
         // res.json(user);   
         //database to data gya or user ko mil jayegi ek token jo ki webbrower ho jaygi store
-        res.json(authtoken);
+        res.json({success,authtoken});
 
     } catch (error) {
         console.error(error.message);

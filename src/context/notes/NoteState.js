@@ -47,7 +47,7 @@ const NoteState = (props) => {
       }
     });
     const json = await response.json()     //we are getting data in the form of json and sending to noteitems through useState setNote();
-    console.log(json);
+  
     setNotes(json);
   }
 
@@ -68,19 +68,7 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag })
     });
-    const json = await response.json();
-    console.log(json)
-
-    console.log("Adding a new note")
-    const note = {
-      "_id": "64e067705350709e5d761650",
-      "user": "64e066ec5350709e5d761647",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2021-09-03T14:20:09.668Z",
-      "__v": 0
-    };
+    const note = await response.json();
     setNotes(notes.concat(note))
   }
 
@@ -100,11 +88,11 @@ const NoteState = (props) => {
     });
 
     const json = response.json();
-    console.log(json);
+
 
     //above code delete note from the database but note update in the Noteitems ,for that we have to update notes again using setNote useState
 
-    console.log("Deleting the note with id" + id);
+  
     const newNotes = notes.filter((note) => { return note._id !== id })         //new note me bo sare notes rahenge jinki note_id!==id;
     setNotes(newNotes);                                                           //uske baad notes jo the unko newNotes bna do
   }
