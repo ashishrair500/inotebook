@@ -43,7 +43,7 @@ const NoteState = (props) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRlMWFjYzcwYTBmMmEzZjdiYjAxN2IzIn0sImlhdCI6MTY5MjUxMjA2NX0.mV6iAF81UY-DFoN8dJ0bSA-kahfz-45lV33uD4yKLKE"
+        "auth-token":localStorage.getItem('token')
       }
     });
     const json = await response.json()     //we are getting data in the form of json and sending to noteitems through useState setNote();
@@ -64,7 +64,7 @@ const NoteState = (props) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRlMWFjYzcwYTBmMmEzZjdiYjAxN2IzIn0sImlhdCI6MTY5MjUxMjA2NX0.mV6iAF81UY-DFoN8dJ0bSA-kahfz-45lV33uD4yKLKE"
+        "auth-token": localStorage.getItem('token')
       },
       body: JSON.stringify({ title, description, tag })
     });
@@ -83,12 +83,12 @@ const NoteState = (props) => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRlMWFjYzcwYTBmMmEzZjdiYjAxN2IzIn0sImlhdCI6MTY5MjUxMjA2NX0.mV6iAF81UY-DFoN8dJ0bSA-kahfz-45lV33uD4yKLKE"
+        "auth-token": localStorage.getItem('token')
       }
     });
 
-    const json = response.json();
-
+   const json = response.json();
+console.log(json);
 
     //above code delete note from the database but note update in the Noteitems ,for that we have to update notes again using setNote useState
 
@@ -110,7 +110,7 @@ const NoteState = (props) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRlMWFjYzcwYTBmMmEzZjdiYjAxN2IzIn0sImlhdCI6MTY5MjUxMjA2NX0.mV6iAF81UY-DFoN8dJ0bSA-kahfz-45lV33uD4yKLKE"
+        "auth-token": localStorage.getItem('token')
       },
       body: JSON.stringify({ title, description, tag })
     });

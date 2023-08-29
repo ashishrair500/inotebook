@@ -1,16 +1,22 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import noteContext from "../context/notes/noteContext";
 import Noteitem from './Noteitem';
+import {useNavigate} from 'react-router-dom';
 
 import AddNote from './AddNote';
 
 const Notes = (props) => {
     const context = useContext(noteContext);
     const { notes, getNotes ,editNote} = context;             //notes and getNotes are coming from NoteState component through api calls
-
-    useEffect(() => {
-        getNotes();
-    }, [])
+    let navigate = useNavigate();
+    
+    useEffect(() => { 
+        if(localStorage.getItem('token')){
+            getNotes();
+        }else{
+            navigate("/login"); 
+        }
+    }, []) 
 
     //All to upadate the notes
 
