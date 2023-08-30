@@ -4,9 +4,9 @@ import noteContext from "../context/notes/noteContext"
 const AddNote = (props) => {
     const context = useContext(noteContext);
 
-    const { addNote } = context;           //addnote function defined in newsstate
+    const { addNote } = context;           //addnote function defined in newsState
 
-    const [note, setNote] = useState({ title: "", description: "", tag: "" })      //coming from input areas
+    const [note, setNote] = useState({ title: "", description: "", tag: "" })       //coming from input areas
 
     const handleClick = (e) => {
         e.preventDefault();
