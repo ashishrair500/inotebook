@@ -1,3 +1,8 @@
+##These are the few Screenshots 
+![Screenshot (82)](https://github.com/ashishrair500/inotebook/assets/100395176/e4fc74d3-d4f7-4025-97c6-002116d07d77)
+![Screenshot (81)](https://github.com/ashishrair500/inotebook/assets/100395176/67a59991-dcda-4661-b4b8-4b9b1354d89e)
+![Screenshot (80)](https://github.com/ashishrair500/inotebook/assets/100395176/ceff04a4-6f09-4133-91c4-16a7a2717e4a)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
