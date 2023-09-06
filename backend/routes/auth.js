@@ -29,7 +29,7 @@ router.post('/createuser', [
         //check whether the user with this email exits already
         try {
             let user = await User.findOne({ email: req.body.email });              //ye layega email model se verify karne ke liye
-
+                                                  //req.body.email is coming from frontend
 
             if (user) {
                 return res.status(400).json({error: "Sorry a user with this email already exits" })
@@ -37,30 +37,39 @@ router.post('/createuser', [
 
 
             const salt = await bcrypt.genSalt(10);
-            const secPass = await bcrypt.hash(req.body.password, salt);
+            const secPass = await bcrypt.hash(req.body.password, salt);   //password is coming from frontend and adding salt and converting it into hash 
 
 
             user = await User.create({              //this funtion is to take json object from request body bad me yahi input area se lenge 
-                name: req.body.name,             //The await keyword is used because creating a new user in the database might take some time, and 
+                           //The await keyword is used because creating a new user in the database might take some time, and 
                 //  we want to wait for it to finish before moving on.
-                email: req.body.email,          // User.create({...}): This line is using the Mongoose create method to insert a new user document into the "user" collection. The method takes an object as an argument, where each key corresponds to a field in your schema, and each value corresponds to the data you want to store in those fields.
+                         // User.create({...}): This line is using the Mongoose create method to insert a new user document into the "user" collection. The method takes an object as an argument, where each key corresponds to a field in your schema, and each value corresponds to the data you want to store in those fields.
+
+                name: req.body.name,          //coming from frontend to store in database
+                email: req.body.email,        //coming from frontend 
                 password: secPass,
             })
 
+//when the above user is created in the database then there is unique id of every user in the model;
+//below we are using that id to create token 
+
+//noteadda bali baat :-- yaaha pr apn subject ki id denge token banale ke liye. or subject ki backend pr bhi rakhsakte hai ya phir alag se model bana denge subject ka 
             console.log(user.id);
             const data = {
                 user: {
-                    id: user.id     //ye uhi collection bala user hai  uhi se id utha rahe hai  //yaha pr id ka use karenge token banane ke liye or sath me  JWT_secret bhej denge;
+                    id: user.id     //ye uhi collection bala user hai uhi se id utha rahe hai  //yaha pr id ka use karenge token banane ke liye or sath me  JWT_secret bhej denge;
                 }
             }
 
-            const authtoken = jwt.sign(data, JWT_SECRET);
+            const authtoken = jwt.sign(data, JWT_SECRET);      //jwt.sign: This is a function provided by the "jsonwebtoken" library, and it's used to generate a JWT token
+
             console.log(authtoken);
             // res.json(user);   
             //database to data gya or user ko mil jayegi ek token jo ki webbrower me ho jaygi store
             success=true;
             res.json({success,authtoken});                //res.json(user) is a method used to send a JSON response to a client (usually a web browser or another application making an HTTP request). 
 
+//after user successfully stored in database "user" model backend will return response through res.json and it is sending success and auth token to frontend
 
         } catch (error) {
             console.error(error.message);
@@ -85,7 +94,7 @@ router.post('/login', [
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { email, password } = req.body;        //this is coming from frontend and verify user after verifying it will return success and authtoken
     try {
         let user = await User.findOne({ email });
         if (!user) {
@@ -109,7 +118,7 @@ router.post('/login', [
         success=true;
         // res.json(user);   
         //database to data gya or user ko mil jayegi ek token jo ki webbrower ho jaygi store
-        res.json({success,authtoken});
+        res.json({success,authtoken});       
 
     } catch (error) {
         console.error(error.message);
@@ -121,7 +130,7 @@ router.post('/login', [
 
 //-------------------------------------------------------------------------end----------------------------------------------------------------------------------
 
-
+//faltu ka router in the point of view of frontend because it is not sending and response to frontend but vey neccessary for middleware
 //Route 3:- jo user login hai uski detail pane ke liye (jaise email,name,id) password ko chhodhkr. lekin ham yaha pr uski id nikaal rahe hai kyuki ek user id se uniquely identified ho jayega using:POST "api/auth/getuser". Login required
 router.post('/getuser', fetchuser, async (req, res) => {
 
@@ -138,4 +147,4 @@ router.post('/getuser', fetchuser, async (req, res) => {
 });
 module.exports = router
 
-//ek essi bhi to key honi chahiye jo dono me common ho auth/User and note/notes.      So we added user in the Notes Schema as a foreign key
+//ek essi bhi to key honi chahiye jo dono me common ho auth/User and note/notes.So we added user in the Notes Schema as a foreign key

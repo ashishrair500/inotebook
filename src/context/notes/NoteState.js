@@ -66,7 +66,7 @@ const NoteState = (props) => {
         'Content-Type': 'application/json',
         "auth-token": localStorage.getItem('token')
       },
-      body: JSON.stringify({ title, description, tag })
+      body: JSON.stringify({ title, description, tag })    //sending to the backend notes route
     });
     const note = await response.json();
     setNotes(notes.concat(note))
@@ -134,7 +134,7 @@ console.log(json);
 
   return (
     <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes }}>
-      {props.children}
+      {props.children}              {/*this syntax means values that are passing here will we availble in all the component that are wrabbed under NoteContext.provider component */}
     </NoteContext.Provider>
   )
 

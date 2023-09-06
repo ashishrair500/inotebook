@@ -14,9 +14,10 @@ const Signup = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name ,email, password})
+            body: JSON.stringify({name ,email, password})               //this is going to backend to store in database 
         });
-        const json = await response.json()
+        const json = await response.json()                              //after user stored in database backend sending success and authtoken to frontend as here
+        
         console.log(json);
         if(json.success){
             localStorage.setItem('token' , json.authtoken);

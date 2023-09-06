@@ -25,12 +25,16 @@ router.post('/addnote', fetchuser, [
     body('description', 'Description must be atleast 5 character').isLength({ min: 5 })],
     async (req, res) => {
         try {
-            const { title, description, tag } = req.body;
+            const { title, description, tag } = req.body;               //coming from frontend NoteState addnote.
             //if there are error, return Bad request and the errors 
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(404).json({ errors: errors.array() })
             }
+
+            //Below :- when we are creating a note to store in mongo title , description , tag is coming from frontend using req.body but... but... but.. when we are storing this note in db we will also store user_id of that user who are adding this note which we will get from user model of mongo using middleware . **req.user.id**  getting it from middleware.
+
+            //for NoteAdda:-  we will add subject_id in the notes model so that we can fetch all the note corresponding to that subject;
             const note = new Notes({
                 title, description, tag, user: req.user.id
             })
@@ -59,12 +63,13 @@ if(tag){newNote.tag=tag}
 let note=await Notes.findById(req.params.id);
 if(!note){return res.status(404).send("Not Found")}
 
+//below: yadi ye uhi user nhi hai to not allowed     //I think unnecessary but not tested yet. 
 if(note.user.toString() !==req.user.id){    //ye uhhi fetchuser bala hai and note.user is coming from Notes schema; 
     return res.status(401).send("Not Allowed");
 }
 
-note=await Notes.findByIdAndUpdate(req.params.id,{$set:newNote},{new:true})
-res.json(note);
+note=await Notes.findByIdAndUpdate(req.params.id,{$set:newNote},{new:true})     
+res.json(note);                                                                 //after updation of notes send it to the frontend 
 })
 
     //-------------------------------------------------------------------------end----------------------------------------------------------------------------------

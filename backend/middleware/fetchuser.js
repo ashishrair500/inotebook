@@ -1,3 +1,6 @@
+//iska frontend se koi sambandh nhi hai
+//the main work of the middleware is to establish coordination between user and note model of mongo
+//for noteadda we can use this middleware between our subject model and note model
 var jwt = require('jsonwebtoken');
 const JWT_SECRET = 'Harryisagoodboy';
 
@@ -6,7 +9,7 @@ const fetchuser=(req,res,next)=>{
 //get the user from the jwt token and add to req object
 const token=req.header('auth-token');                          
 /*
-see here whenever we signup or signIn client get a token as reponse which is consist of id+JWT_SECRET  here for testin purpose e are sending token through header as variable auth-token. 
+see here whenever we signup or signIn client get a token as reponse which is consist of id+JWT_SECRET  here for testing purpose. we are sending token through header as variable auth-token. 
 since that token is consist of id and JWT_SECRET;
 */
 if(!token){
@@ -29,7 +32,7 @@ there are two types of ids
 
 */
    // console.log(data);
-    req.user=data.user;    // ab jo object return hua tha jwt se uske user ko (by data.user)  re.user ko assing kr denge  
+    req.user=data.user;    // ab jo object return hua tha jwt se uske user ko (by data.user)  req.user ko assing kr denge  
     //  The line req.user = data.user; simply assigns the value of the user property from the data object to the req.user property. It seems like this is part of a middleware or route handler in an Express.js application where the goal is to make the authenticated user's information available for further processing.   
     //the first middleware assigns the user data to req.user, and then the /profile route handler can access that user data from req.user to send a JSON response containing the user information.
     next();
