@@ -20,6 +20,7 @@ res.status(401).send({error:"Please authenticate using a valid token"})
 try{
     const data=jwt.verify(token, JWT_SECRET);    
 /*
+
 there are two types of ids 
 1.id 64de43366a2781e4cbd1af8b           this is related to particular data (means as in table each row has its unique id);
 2.user  64dcff53d26fcefd41f59b47         and this is related to a particular user . same for all the data coloumn of a user;
